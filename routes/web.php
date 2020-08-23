@@ -43,3 +43,15 @@ Route::resource('users', 'UserController');
 Route::resource('courseProgresses', 'Course_progressController');
 
 Route::resource('reportAConcerns', 'Report_a_concernController');
+
+Route::resource('enrollments', 'EnrollmentController');
+
+Route::resource('courseUsers', 'CourseUserController');
+
+// Route::resource('courseUsers', 'CourseUserController');
+
+// Route::resource('courseUsers', 'CourseUserController');
+
+// Route::resource('courseUsers', 'CourseUserController');
+
+Route::resource('createcourses', 'CreatecourseController');

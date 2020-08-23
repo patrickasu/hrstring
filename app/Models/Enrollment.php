@@ -6,17 +6,18 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Category
+ * Class Enrollment
  * @package App\Models
- * @version August 8, 2020, 3:48 pm UTC
+ * @version August 19, 2020, 11:21 pm UTC
  *
  * @property string $name
+ * @property string $course_name
  */
-class Category extends Model
+class Enrollment extends Model
 {
     use SoftDeletes;
 
-    public $table = 'categories';
+    public $table = 'enrollments';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -27,7 +28,8 @@ class Category extends Model
 
 
     public $fillable = [
-        'name'
+        'name',
+        'course_name'
     ];
 
     /**
@@ -37,7 +39,8 @@ class Category extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'name' => 'string'
+        'name' => 'string',
+        'course_name' => 'string'
     ];
 
     /**
@@ -46,20 +49,19 @@ class Category extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|string|max:255',
+        'name' => 'nullable|string|max:255',
+        'course_name' => 'nullable|string|max:255',
         'deleted_at' => 'nullable',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
 
+    public function enrollments(){
+        return $this->hasMany('App\Models\User');
+    }
+
     public function courses()
     {
         return $this->hasMany('App\Models\Course');
     }
-
-    public function createcourses()
-    {
-        return $this->hasMany('App\Models\Course');
-    }
-    
 }

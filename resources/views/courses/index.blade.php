@@ -9,10 +9,15 @@
         <p>To start on a single exam click on Start Exam</p>
     </div>
     <section class="content-header">
-        <h1 class="pull-left">Courses</h1>
+        @if (Auth::check() AND (Auth::user()->role_id < 3))
+           <h1 class="pull-left">Enrollment History</h1>
+            @else
+            <h1 class="pull-left">My Courses</h1>
+            <br>
+        @endif
          @if (Auth::check() AND (Auth::user()->role_id < 3))
             <h1 class="pull-right">
-                <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('courses.create') }}">Add New</a>
+                <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('courses.create') }}">Assign Course</a>
             </h1>
             <br>
         @endif
@@ -24,7 +29,11 @@
         <div class="clearfix"></div>
         <div class="box box-primary">
             <div class="box-body">
+                @if (Auth::check() AND (Auth::user()->role_id < 3))
+                    @include('courses.courseshistory')
+                    @else
                     @include('courses.table')
+                @endif   
             </div>
         </div>
         <div class="text-center">

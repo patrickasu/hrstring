@@ -6,9 +6,9 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Course
+ * Class CourseUser
  * @package App\Models
- * @version August 14, 2020, 3:30 pm UTC
+ * @versio * @version August 21, 2020, 9:43 am UTC
  *
  * @property integer $user_id
  * @property integer $category_id
@@ -24,12 +24,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $course_url5
  * @property string $exam_url
  * @property string $resources
+ * @property number $paid_amount
+ * @property boolean $status
  */
-class Course extends Model
+class CourseUser extends Model
 {
     use SoftDeletes;
 
-    public $table = 'courses';
+    public $table = 'course_user';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -53,7 +55,9 @@ class Course extends Model
         'course_url4',
         'course_url5',
         'exam_url',
-        'resources'
+        'resources',
+        'paid_amount',
+        'status'
     ];
 
     /**
@@ -76,7 +80,9 @@ class Course extends Model
         'course_url4' => 'string',
         'course_url5' => 'string',
         'exam_url' => 'string',
-        'resources' => 'string'
+        'resources' => 'string',
+        'paid_amount' => 'float',
+        'status' => 'boolean'
     ];
 
     /**
@@ -99,32 +105,15 @@ class Course extends Model
         'course_url5' => 'nullable|string|max:255',
         'exam_url' => 'nullable|string|max:255',
         'resources' => 'nullable|string',
+        'paid_amount' => 'nullable|numeric',
+        'status' => 'nullable|boolean',
         'deleted_at' => 'nullable',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
 
-    public function category()
-    {
-        return $this->belongsTo('App\Models\Category');
+    public function courses(){
+        return $this->hasMany('App\Models\Course');
     }
 
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany('App\Models\User');
-    }
-    
-    public function courseUser(){
-        return $this->belongsTo('App\Models\CourseUser');
-    }
-
-    public function createcourses()
-    {
-        return $this->belongsTo('App\Models\Createcourse');
-    }
 }

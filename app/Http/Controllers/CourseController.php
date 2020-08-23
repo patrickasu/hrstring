@@ -7,6 +7,9 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Repositories\CourseRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Category;
+use App\Models\Course;
+use App\Models\Createcourse;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -34,8 +37,10 @@ class CourseController extends AppBaseController
     {
         $courses = $this->courseRepository->all();
 
+        $users = User::all();
         return view('courses.index')
-            ->with('courses', $courses);
+            ->with('courses', $courses)
+            ->with('users', $users);
     }
 
     /**
@@ -46,7 +51,12 @@ class CourseController extends AppBaseController
     public function create()
     {
         $categories = Category::all();
-        return view('courses.create')->with('categories', $categories);
+        $users = User::all();
+        $createcourses = Createcourse::all();
+        return view('courses.create')
+        ->with('categories', $categories)
+        ->with('users', $users)
+        ->with('createcourses', $createcourses);
     }
 
     /**
@@ -84,7 +94,9 @@ class CourseController extends AppBaseController
             return redirect(route('courses.index'));
         }
 
-        return view('courses.show')->with('course', $course);
+        $users = Course::find($id)->users()->get();
+        // dd($users);
+        return view('courses.show')->with('course', $course)->with('users', $users);
     }
 
     /**
@@ -105,9 +117,13 @@ class CourseController extends AppBaseController
         }
 
         $categories = Category::all();
+        $createcourses = Createcourse::all();
+        $users = User::all();
         return view('courses.edit', [
             'categories' => $categories,
             'course' => $course,
+            'createcourses' => $createcourses,
+            'users' => $users,
         ]);
         // return view('courses.edit')->with('course', $course);
     }

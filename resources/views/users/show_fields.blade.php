@@ -4,10 +4,9 @@
     <p>{{ $user->name }}</p>
 </div>
 
-<!-- Date Enroll Field -->
 <div class="form-group">
-    {!! Form::label('date_enroll', 'Date Enroll:') !!}
-    <p>{{ $user->date_enroll }}</p>
+    {!! Form::label('date_enroll', 'Date Created:') !!}
+    <p>{{ $user->created_at }}</p>
 </div>
 
 <!-- Email Field -->

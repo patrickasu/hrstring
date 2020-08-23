@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Createcourse;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -37,11 +38,13 @@ class HomeController extends Controller
     public function index()
     {
         $courseCount = Course::count();
+        $CreateCourseCount = Createcourse::count();
         $userCount = User::count();
         $courses = Course::All();
         return view('home', [
             'courses' => $courses,
             'courseCount' => $courseCount,
+            'CreateCourseCount' => $CreateCourseCount,
             'userCount' => $userCount,
         ]);
         // return view('home', [

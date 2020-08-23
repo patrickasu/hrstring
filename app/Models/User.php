@@ -79,4 +79,13 @@ class User extends Model
     public function role(){
         return $this->belongsTo('App\Models\Role');
     }
+
+    public function courses(){
+        return $this->hasMany('App\Models\Course');
+    }
+
+    // public function courses()
+    // {
+    //     return $this->belongsToMany('App\Models\Course');
+    // }
 }

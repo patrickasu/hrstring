@@ -19,7 +19,7 @@
         </thead>
         <tbody>
         @foreach($courses as $course)
-        @if(auth()->user()->id == $course->user_id)
+            @if (Auth::check() AND (Auth::user()->role_id < 3 ))
             <tr>
             {{-- @if (Auth::check() AND (Auth::user()->role_id < 3 || Auth::user()->id == $course->user_id))
                 <td>{{ $course->user['name'] }}</td>

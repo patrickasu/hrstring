@@ -6,17 +6,14 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Course
+ * Class Createcourse
  * @package App\Models
- * @version August 14, 2020, 3:30 pm UTC
+ * @version August 22, 2020, 6:37 pm UTC
  *
- * @property integer $user_id
- * @property integer $category_id
  * @property string $course_name
+ * @property integer $category_id
  * @property string $introduction
  * @property string $description
- * @property string|\Carbon\Carbon $assign_date
- * @property string|\Carbon\Carbon $expire_date
  * @property string $course_url1
  * @property string $course_url2
  * @property string $course_url3
@@ -25,11 +22,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $exam_url
  * @property string $resources
  */
-class Course extends Model
+class Createcourse extends Model
 {
     use SoftDeletes;
 
-    public $table = 'courses';
+    public $table = 'createcourses';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -40,13 +37,10 @@ class Course extends Model
 
 
     public $fillable = [
-        'user_id',
-        'category_id',
         'course_name',
+        'category_id',
         'introduction',
         'description',
-        'assign_date',
-        'expire_date',
         'course_url1',
         'course_url2',
         'course_url3',
@@ -63,13 +57,10 @@ class Course extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'user_id' => 'integer',
-        'category_id' => 'integer',
         'course_name' => 'string',
+        'category_id' => 'integer',
         'introduction' => 'string',
         'description' => 'string',
-        'assign_date' => 'datetime',
-        'expire_date' => 'datetime',
         'course_url1' => 'string',
         'course_url2' => 'string',
         'course_url3' => 'string',
@@ -85,13 +76,10 @@ class Course extends Model
      * @var array
      */
     public static $rules = [
-        'user_id' => 'nullable|integer',
-        'category_id' => 'nullable|integer',
         'course_name' => 'nullable|string|max:255',
+        'category_id' => 'nullable|integer',
         'introduction' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'assign_date' => 'nullable',
-        'expire_date' => 'nullable',
         'course_url1' => 'nullable|string|max:255',
         'course_url2' => 'nullable|string|max:255',
         'course_url3' => 'nullable|string|max:255',
@@ -109,22 +97,8 @@ class Course extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
-    public function user()
+    public function courses()
     {
-        return $this->belongsTo('App\Models\User');
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany('App\Models\User');
-    }
-    
-    public function courseUser(){
-        return $this->belongsTo('App\Models\CourseUser');
-    }
-
-    public function createcourses()
-    {
-        return $this->belongsTo('App\Models\Createcourse');
+        return $this->hasMany('App\Models\Course');
     }
 }

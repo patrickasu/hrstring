@@ -5,7 +5,11 @@
 <section class="content-header">
       <h1 style="margin-bottom: 20px;">
         Dashboard
-        <small style="text-muted">Candidate portal</small>
+        @if (Auth::check() AND (Auth::user()->role_id < 3))
+          <small style="text-muted">Admin portal</small>
+          @else
+          <small style="text-muted">Candidate portal</small>
+        @endif
       </h1>
       <ol class="breadcrumb" style="margin-right: 100px;">
         <li><a href="/home"><i class="fa fa-dashboard"></i> </a></li>
@@ -19,7 +23,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Total Courses</span>
-              <span class="info-box-number">{{ $courseCount }}<small></small></span>
+              <span class="info-box-number">{{ $CreateCourseCount }} +<small></small></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -55,7 +59,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Total Candidates</span>
-              <span class="info-box-number">{{ $userCount }}</span>
+              <span class="info-box-number">{{ $userCount }} +</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -72,11 +76,17 @@
         <div class="clearfix"></div>
 
         @include('flash::message')
-
+        @if (Auth::check() AND (Auth::user()->role_id < 3))
+          <h3 class="text-center">Enrollment History</h3>
+        @endif
         <div class="clearfix"></div>
         <div class="box box-primary container">
             <div class="box-body">
-              @include('courses.table')
+              @if (Auth::check() AND (Auth::user()->role_id < 3))
+                @include('courses.courseshistory')
+                @else
+                @include('courses.table')
+              @endif
             </div>
         </div>
         <div class="text-center">

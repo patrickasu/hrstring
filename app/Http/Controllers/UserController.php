@@ -12,6 +12,7 @@ use Flash;
 use Response;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Course;
 
 class UserController extends AppBaseController
 {
@@ -35,8 +36,10 @@ class UserController extends AppBaseController
     {
         $users = $this->userRepository->all();
 
+        $courses = Course::all();
         return view('users.index')
-            ->with('users', $users);
+            ->with('users', $users)
+            ->with('courses', $courses);
     }
 
     /**
@@ -98,22 +101,6 @@ class UserController extends AppBaseController
     //     return redirect(route('users.index'));
     // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Display the specified User.
      *
@@ -131,7 +118,12 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        return view('users.show')->with('user', $user);
+        $courses = Course::all();
+        $users = User::all();
+        return view('users.show')
+        ->with('user', $user)
+        ->with('users', $users)
+        ->with('courses', $courses);
     }
 
     /**

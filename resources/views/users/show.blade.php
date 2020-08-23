@@ -11,6 +11,12 @@
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
                     @include('users.show_fields')
+                     @if (Auth::check() AND (Auth::user()->role_id < 3))
+                    <div class="col-md-12">
+                        <h3 class="text-center">All Students</h3>
+                        @include('users.table_user')
+                    </div>
+                    @endif
                     <a href="{{ route('users.index') }}" class="btn btn-default">Back</a>
                 </div>
             </div>
